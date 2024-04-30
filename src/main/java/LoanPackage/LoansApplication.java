@@ -4,6 +4,8 @@
  */
 package LoanPackage;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  *
@@ -166,7 +168,7 @@ public class LoansApplication extends javax.swing.JFrame {
 
         jLabel4.setText("Term:");
 
-        TERM_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Short term", "Medium Term", "Long Term", " ", " " }));
+        TERM_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Short ", "Medium ", "Long ", " " }));
         TERM_SELECTION.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         TERM_SELECTION.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,9 +178,14 @@ public class LoansApplication extends javax.swing.JFrame {
 
         jLabel5.setText("Loan Type:");
 
-        LOANTYPE_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Business", "Personal" }));
+        LOANTYPE_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Business", "Personal" }));
 
         SUBMIT_APPLICATION_BUTTON.setText("Submit Application");
+        SUBMIT_APPLICATION_BUTTON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SUBMIT_APPLICATION_BUTTONActionPerformed(evt);
+            }
+        });
 
         LOAN_APPLICATION_BACK_BUTTON.setText("Back");
         LOAN_APPLICATION_BACK_BUTTON.addActionListener(new java.awt.event.ActionListener() {
@@ -253,10 +260,32 @@ public class LoansApplication extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Name", "Loan Amount", "Term", "Loan type"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        DISPLAY_LOAN_TABLE.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(DISPLAY_LOAN_TABLE);
+        if (DISPLAY_LOAN_TABLE.getColumnModel().getColumnCount() > 0) {
+            DISPLAY_LOAN_TABLE.getColumnModel().getColumn(0).setResizable(false);
+            DISPLAY_LOAN_TABLE.getColumnModel().getColumn(1).setResizable(false);
+            DISPLAY_LOAN_TABLE.getColumnModel().getColumn(2).setResizable(false);
+            DISPLAY_LOAN_TABLE.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         DISPLAY_LOAN_BACK_BUTTON.setText("Back");
         DISPLAY_LOAN_BACK_BUTTON.addActionListener(new java.awt.event.ActionListener() {
@@ -299,6 +328,12 @@ public class LoansApplication extends javax.swing.JFrame {
 
         jLabel7.setText("Enter loan number:");
 
+        LOAN_NUMBER_FIELD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LOAN_NUMBER_FIELDActionPerformed(evt);
+            }
+        });
+
         SEARCH_LOAN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -307,10 +342,32 @@ public class LoansApplication extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Name", "Loan Amount", "Term", "Loan Type"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        SEARCH_LOAN_TABLE.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(SEARCH_LOAN_TABLE);
+        if (SEARCH_LOAN_TABLE.getColumnModel().getColumnCount() > 0) {
+            SEARCH_LOAN_TABLE.getColumnModel().getColumn(0).setResizable(false);
+            SEARCH_LOAN_TABLE.getColumnModel().getColumn(1).setResizable(false);
+            SEARCH_LOAN_TABLE.getColumnModel().getColumn(2).setResizable(false);
+            SEARCH_LOAN_TABLE.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         SEARCH_LOAN_BACK_BUTTON.setText("Back");
         SEARCH_LOAN_BACK_BUTTON.addActionListener(new java.awt.event.ActionListener() {
@@ -426,11 +483,37 @@ public class LoansApplication extends javax.swing.JFrame {
 
     private void APPLICANTNAME_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_APPLICANTNAME_FIELDActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_APPLICANTNAME_FIELDActionPerformed
 
     private void TERM_SELECTIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TERM_SELECTIONActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TERM_SELECTIONActionPerformed
+
+    private void LOAN_NUMBER_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELDActionPerformed
+       
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LOAN_NUMBER_FIELDActionPerformed
+
+    private void SUBMIT_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
+       /* APPLICANTNAME_FIELD.getText();
+         LOANAMOUNT_FIELD.getText(); */
+       String choice =(String) TERM_SELECTION.getSelectedItem();
+       String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
+       if(APPLICANTNAME_FIELD.getText().equals("")|| LOANAMOUNT_FIELD.getText().equals("") ||choice.equals("None")||choice2.equals("None")){
+           JOptionPane.showMessageDialog(rootPane, "All fields must be filled.");
+       }else{
+           String obj = choice.toString();
+           String obj2 = choice2.toString();
+           String data[] = {APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),obj,obj2};
+           DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
+           
+           tblModel.insertRow(0,data);
+           JOptionPane.showMessageDialog(rootPane, "Data saved successfully.");
+       }
+       
+       
+    }//GEN-LAST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
 
     /**
      * @param args the command line arguments
