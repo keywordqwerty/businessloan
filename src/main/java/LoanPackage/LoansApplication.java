@@ -6,7 +6,8 @@ package LoanPackage;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowFilter;
 /**
  *
  * @author Louis Valencia
@@ -33,7 +34,6 @@ public class LoansApplication extends javax.swing.JFrame {
         MAIN_PANE = new javax.swing.JPanel();
         LOAN_APPLICATION_BUTTON = new javax.swing.JToggleButton();
         LOAN_LIST_BUTTON = new javax.swing.JToggleButton();
-        SEARCH_LOAN_BUTTON = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         LOANAPPLICATION_PANE = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -46,17 +46,15 @@ public class LoansApplication extends javax.swing.JFrame {
         LOANTYPE_SELECTION = new javax.swing.JComboBox<>();
         SUBMIT_APPLICATION_BUTTON = new javax.swing.JButton();
         LOAN_APPLICATION_BACK_BUTTON = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        LOANNUMBER_FIELD = new javax.swing.JTextField();
         DISPLAYLOAN_PANE = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DISPLAY_LOAN_TABLE = new javax.swing.JTable();
         DISPLAY_LOAN_BACK_BUTTON = new javax.swing.JButton();
-        SEARCHLOAN_PANE = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        LOAN_NUMBER_FIELD = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        SEARCH_LOAN_TABLE = new javax.swing.JTable();
-        SEARCH_LOAN_BACK_BUTTON = new javax.swing.JButton();
+        LOAN_NUMBER_FIELD1 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,22 +90,6 @@ public class LoansApplication extends javax.swing.JFrame {
             }
         });
 
-        SEARCH_LOAN_BUTTON.setFont(new java.awt.Font(".AppleSystemUIFont", 1, 14)); // NOI18N
-        SEARCH_LOAN_BUTTON.setText("SEARCH LOAN");
-        SEARCH_LOAN_BUTTON.setBorderPainted(false);
-        SEARCH_LOAN_BUTTON.setFocusPainted(false);
-        SEARCH_LOAN_BUTTON.setRolloverEnabled(false);
-        SEARCH_LOAN_BUTTON.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SEARCH_LOAN_BUTTONMouseClicked(evt);
-            }
-        });
-        SEARCH_LOAN_BUTTON.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SEARCH_LOAN_BUTTONActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Arial Black", 3, 13)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("KOMPANYA NI PERCY CO.");
@@ -121,9 +103,8 @@ public class LoansApplication extends javax.swing.JFrame {
                 .addGroup(MAIN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(LOAN_APPLICATION_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LOAN_LIST_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SEARCH_LOAN_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(280, Short.MAX_VALUE))
         );
         MAIN_PANELayout.setVerticalGroup(
             MAIN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,9 +115,7 @@ public class LoansApplication extends javax.swing.JFrame {
                 .addComponent(LOAN_APPLICATION_BUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(LOAN_LIST_BUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(SEARCH_LOAN_BUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         PANE.addTab("MAIN", MAIN_PANE);
@@ -194,6 +173,14 @@ public class LoansApplication extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Loan Number:");
+
+        LOANNUMBER_FIELD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LOANNUMBER_FIELDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LOANAPPLICATION_PANELayout = new javax.swing.GroupLayout(LOANAPPLICATION_PANE);
         LOANAPPLICATION_PANE.setLayout(LOANAPPLICATION_PANELayout);
         LOANAPPLICATION_PANELayout.setHorizontalGroup(
@@ -207,43 +194,49 @@ public class LoansApplication extends javax.swing.JFrame {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel8))
                         .addGap(32, 32, 32)
-                        .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(LOANTYPE_SELECTION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TERM_SELECTION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(APPLICANTNAME_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LOANAMOUNT_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(APPLICANTNAME_FIELD, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(LOANAMOUNT_FIELD, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(LOANNUMBER_FIELD)))
                     .addGroup(LOANAPPLICATION_PANELayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(LOAN_APPLICATION_BACK_BUTTON))
                     .addGroup(LOANAPPLICATION_PANELayout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(SUBMIT_APPLICATION_BUTTON)))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
         LOANAPPLICATION_PANELayout.setVerticalGroup(
             LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LOANAPPLICATION_PANELayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(LOAN_APPLICATION_BACK_BUTTON)
-                .addGap(18, 18, 18)
-                .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(22, 22, 22)
+                .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8)
+                    .addComponent(LOANNUMBER_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(APPLICANTNAME_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(LOANAMOUNT_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TERM_SELECTION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(21, 21, 21)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LOANTYPE_SELECTION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(SUBMIT_APPLICATION_BUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45))
         );
@@ -254,20 +247,20 @@ public class LoansApplication extends javax.swing.JFrame {
 
         DISPLAY_LOAN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Name", "Loan Amount", "Term", "Loan type"
+                "Loan #", "Name", "Loan Amount", "Term", "Loan type", "Amount Owed"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -285,6 +278,8 @@ public class LoansApplication extends javax.swing.JFrame {
             DISPLAY_LOAN_TABLE.getColumnModel().getColumn(1).setResizable(false);
             DISPLAY_LOAN_TABLE.getColumnModel().getColumn(2).setResizable(false);
             DISPLAY_LOAN_TABLE.getColumnModel().getColumn(3).setResizable(false);
+            DISPLAY_LOAN_TABLE.getColumnModel().getColumn(4).setResizable(false);
+            DISPLAY_LOAN_TABLE.getColumnModel().getColumn(5).setResizable(false);
         }
 
         DISPLAY_LOAN_BACK_BUTTON.setText("Back");
@@ -294,129 +289,66 @@ public class LoansApplication extends javax.swing.JFrame {
             }
         });
 
+        LOAN_NUMBER_FIELD1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LOAN_NUMBER_FIELD1ActionPerformed(evt);
+            }
+        });
+        LOAN_NUMBER_FIELD1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                LOAN_NUMBER_FIELD1KeyReleased(evt);
+            }
+        });
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("SEARCH");
+
         javax.swing.GroupLayout DISPLAYLOAN_PANELayout = new javax.swing.GroupLayout(DISPLAYLOAN_PANE);
         DISPLAYLOAN_PANE.setLayout(DISPLAYLOAN_PANELayout);
         DISPLAYLOAN_PANELayout.setHorizontalGroup(
             DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
             .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
-                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jLabel6))
-                    .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(DISPLAY_LOAN_BACK_BUTTON)))
+                .addGap(78, 78, 78)
+                .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(DISPLAY_LOAN_BACK_BUTTON)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(195, 195, 195))
         );
         DISPLAYLOAN_PANELayout.setVerticalGroup(
             DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(DISPLAY_LOAN_BACK_BUTTON)
-                .addGap(64, 64, 64)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DISPLAY_LOAN_BACK_BUTTON)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel6)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         PANE.addTab("DISPLAY LOAN", DISPLAYLOAN_PANE);
-
-        jLabel7.setText("Enter loan number:");
-
-        LOAN_NUMBER_FIELD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LOAN_NUMBER_FIELDActionPerformed(evt);
-            }
-        });
-
-        SEARCH_LOAN_TABLE.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Name", "Loan Amount", "Term", "Loan Type"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        SEARCH_LOAN_TABLE.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(SEARCH_LOAN_TABLE);
-        if (SEARCH_LOAN_TABLE.getColumnModel().getColumnCount() > 0) {
-            SEARCH_LOAN_TABLE.getColumnModel().getColumn(0).setResizable(false);
-            SEARCH_LOAN_TABLE.getColumnModel().getColumn(1).setResizable(false);
-            SEARCH_LOAN_TABLE.getColumnModel().getColumn(2).setResizable(false);
-            SEARCH_LOAN_TABLE.getColumnModel().getColumn(3).setResizable(false);
-        }
-
-        SEARCH_LOAN_BACK_BUTTON.setText("Back");
-        SEARCH_LOAN_BACK_BUTTON.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SEARCH_LOAN_BACK_BUTTONActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout SEARCHLOAN_PANELayout = new javax.swing.GroupLayout(SEARCHLOAN_PANE);
-        SEARCHLOAN_PANE.setLayout(SEARCHLOAN_PANELayout);
-        SEARCHLOAN_PANELayout.setHorizontalGroup(
-            SEARCHLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SEARCHLOAN_PANELayout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
-            .addGroup(SEARCHLOAN_PANELayout.createSequentialGroup()
-                .addGroup(SEARCHLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SEARCHLOAN_PANELayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel7)
-                        .addGap(26, 26, 26)
-                        .addComponent(LOAN_NUMBER_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(SEARCHLOAN_PANELayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(SEARCH_LOAN_BACK_BUTTON)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        SEARCHLOAN_PANELayout.setVerticalGroup(
-            SEARCHLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SEARCHLOAN_PANELayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(SEARCH_LOAN_BACK_BUTTON)
-                .addGap(26, 26, 26)
-                .addGroup(SEARCHLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(LOAN_NUMBER_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(150, Short.MAX_VALUE))
-        );
-
-        PANE.addTab("SEARCH LOAN", SEARCHLOAN_PANE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PANE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PANE, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,93 +359,97 @@ public class LoansApplication extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void APPLICANTNAME_FIELDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_APPLICANTNAME_FIELDKeyPressed
+    private void LOAN_NUMBER_FIELD1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELD1KeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_APPLICANTNAME_FIELDKeyPressed
+        DefaultTableModel obj = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+        TableRowSorter <DefaultTableModel> obj2 = new TableRowSorter<> (obj);
+        DISPLAY_LOAN_TABLE.setRowSorter(obj2);
+        obj2.setRowFilter(RowFilter.regexFilter(LOAN_NUMBER_FIELD1.getText()));
+    }//GEN-LAST:event_LOAN_NUMBER_FIELD1KeyReleased
 
-    private void LOANAMOUNT_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOANAMOUNT_FIELDActionPerformed
+    private void LOAN_NUMBER_FIELD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELD1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_LOANAMOUNT_FIELDActionPerformed
-
-    private void LOAN_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BUTTONActionPerformed
-        // TODO add your handling code here:
-         PANE.setSelectedComponent(LOANAPPLICATION_PANE);
-    }//GEN-LAST:event_LOAN_APPLICATION_BUTTONActionPerformed
-
-    private void LOAN_APPLICATION_BUTTONMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BUTTONMouseClicked
-        // TODO add your handling code here:
-      
-        
-    }//GEN-LAST:event_LOAN_APPLICATION_BUTTONMouseClicked
-
-    private void LOAN_LIST_BUTTONMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LOAN_LIST_BUTTONMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_LOAN_LIST_BUTTONMouseClicked
-
-    private void SEARCH_LOAN_BUTTONMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SEARCH_LOAN_BUTTONMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_SEARCH_LOAN_BUTTONMouseClicked
-
-    private void LOAN_APPLICATION_BACK_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BACK_BUTTONActionPerformed
-        // TODO add your handling code here:
-        PANE.setSelectedComponent(MAIN_PANE);
-    }//GEN-LAST:event_LOAN_APPLICATION_BACK_BUTTONActionPerformed
+    }//GEN-LAST:event_LOAN_NUMBER_FIELD1ActionPerformed
 
     private void DISPLAY_LOAN_BACK_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DISPLAY_LOAN_BACK_BUTTONActionPerformed
         // TODO add your handling code here:
         PANE.setSelectedComponent(MAIN_PANE);
     }//GEN-LAST:event_DISPLAY_LOAN_BACK_BUTTONActionPerformed
 
-    private void SEARCH_LOAN_BACK_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SEARCH_LOAN_BACK_BUTTONActionPerformed
+    private void LOANNUMBER_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOANNUMBER_FIELDActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LOANNUMBER_FIELDActionPerformed
+
+    private void LOAN_APPLICATION_BACK_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BACK_BUTTONActionPerformed
         // TODO add your handling code here:
         PANE.setSelectedComponent(MAIN_PANE);
-    }//GEN-LAST:event_SEARCH_LOAN_BACK_BUTTONActionPerformed
+    }//GEN-LAST:event_LOAN_APPLICATION_BACK_BUTTONActionPerformed
+
+    private void SUBMIT_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
+        /* APPLICANTNAME_FIELD.getText();
+        LOANAMOUNT_FIELD.getText(); */
+        
+        String choice = (String) TERM_SELECTION.getSelectedItem();
+        String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
+        if(LOANNUMBER_FIELD.getText().equals("")||APPLICANTNAME_FIELD.getText().equals("")|| LOANAMOUNT_FIELD.getText().equals("") ||choice.equals("None")||choice2.equals("None")){
+            JOptionPane.showMessageDialog(rootPane, "All fields must be filled.");
+        }else{
+            int obj = 0;
+            
+           if(TERM_SELECTION.getSelectedItem().equals("Short Term")){
+          /*TERM NI SIYA ---->*/     obj = LoanConstants.shortTerm;
+            }
+           
+            String obj2 = choice2.toString();
+            
+            BusinessLoan businessloan = new BusinessLoan(Integer.parseInt(LOANNUMBER_FIELD.getText()),APPLICANTNAME_FIELD.getText(),Double.parseDouble(LOANAMOUNT_FIELD.getText())); /*Loan # , Name, LoanAmount , Term, Loan Type, Amount owed*/
+            double amountOwed = businessloan.calculateOwed();
+            String data[] = {LOANNUMBER_FIELD.getText(),APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),String.valueOf(obj),obj2,String.valueOf(amountOwed)};
+            DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
+            
+            tblModel.insertRow(0,data);
+            JOptionPane.showMessageDialog(rootPane, "Data saved successfully.");
+        }
+
+    }//GEN-LAST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
+
+    private void TERM_SELECTIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TERM_SELECTIONActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TERM_SELECTIONActionPerformed
+
+    private void LOANAMOUNT_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOANAMOUNT_FIELDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LOANAMOUNT_FIELDActionPerformed
+
+    private void APPLICANTNAME_FIELDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_APPLICANTNAME_FIELDKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_APPLICANTNAME_FIELDKeyPressed
+
+    private void APPLICANTNAME_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_APPLICANTNAME_FIELDActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_APPLICANTNAME_FIELDActionPerformed
 
     private void LOAN_LIST_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_LIST_BUTTONActionPerformed
         // TODO add your handling code here:
         PANE.setSelectedComponent(DISPLAYLOAN_PANE);
     }//GEN-LAST:event_LOAN_LIST_BUTTONActionPerformed
 
-    private void SEARCH_LOAN_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SEARCH_LOAN_BUTTONActionPerformed
+    private void LOAN_LIST_BUTTONMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LOAN_LIST_BUTTONMouseClicked
         // TODO add your handling code here:
-        PANE.setSelectedComponent(SEARCHLOAN_PANE);
-    }//GEN-LAST:event_SEARCH_LOAN_BUTTONActionPerformed
 
-    private void APPLICANTNAME_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_APPLICANTNAME_FIELDActionPerformed
+    }//GEN-LAST:event_LOAN_LIST_BUTTONMouseClicked
+
+    private void LOAN_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BUTTONActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_APPLICANTNAME_FIELDActionPerformed
+        PANE.setSelectedComponent(LOANAPPLICATION_PANE);
+    }//GEN-LAST:event_LOAN_APPLICATION_BUTTONActionPerformed
 
-    private void TERM_SELECTIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TERM_SELECTIONActionPerformed
+    private void LOAN_APPLICATION_BUTTONMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BUTTONMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_TERM_SELECTIONActionPerformed
 
-    private void LOAN_NUMBER_FIELDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELDActionPerformed
-       
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LOAN_NUMBER_FIELDActionPerformed
-
-    private void SUBMIT_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
-       /* APPLICANTNAME_FIELD.getText();
-         LOANAMOUNT_FIELD.getText(); */
-       String choice =(String) TERM_SELECTION.getSelectedItem();
-       String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
-       if(APPLICANTNAME_FIELD.getText().equals("")|| LOANAMOUNT_FIELD.getText().equals("") ||choice.equals("None")||choice2.equals("None")){
-           JOptionPane.showMessageDialog(rootPane, "All fields must be filled.");
-       }else{
-           String obj = choice.toString();
-           String obj2 = choice2.toString();
-           String data[] = {APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),obj,obj2};
-           DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
-           
-           tblModel.insertRow(0,data);
-           JOptionPane.showMessageDialog(rootPane, "Data saved successfully.");
-       }
-       
-       
-    }//GEN-LAST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
+    }//GEN-LAST:event_LOAN_APPLICATION_BUTTONMouseClicked
 
     /**
      * @param args the command line arguments
@@ -557,17 +493,14 @@ public class LoansApplication extends javax.swing.JFrame {
     private javax.swing.JTable DISPLAY_LOAN_TABLE;
     private javax.swing.JTextField LOANAMOUNT_FIELD;
     private javax.swing.JPanel LOANAPPLICATION_PANE;
+    private javax.swing.JTextField LOANNUMBER_FIELD;
     private javax.swing.JComboBox<String> LOANTYPE_SELECTION;
     private javax.swing.JButton LOAN_APPLICATION_BACK_BUTTON;
     private javax.swing.JToggleButton LOAN_APPLICATION_BUTTON;
     private javax.swing.JToggleButton LOAN_LIST_BUTTON;
-    private javax.swing.JTextField LOAN_NUMBER_FIELD;
+    private javax.swing.JTextField LOAN_NUMBER_FIELD1;
     private javax.swing.JPanel MAIN_PANE;
     private javax.swing.JTabbedPane PANE;
-    private javax.swing.JPanel SEARCHLOAN_PANE;
-    private javax.swing.JButton SEARCH_LOAN_BACK_BUTTON;
-    private javax.swing.JToggleButton SEARCH_LOAN_BUTTON;
-    private javax.swing.JTable SEARCH_LOAN_TABLE;
     private javax.swing.JButton SUBMIT_APPLICATION_BUTTON;
     private javax.swing.JComboBox<String> TERM_SELECTION;
     private javax.swing.JLabel jLabel1;
@@ -576,8 +509,8 @@ public class LoansApplication extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

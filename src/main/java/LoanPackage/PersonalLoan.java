@@ -9,12 +9,17 @@ package LoanPackage;
  * @author Louis Valencia
  */
 public class PersonalLoan extends Loan {
+    private double setInterestRate;
     
-    public PersonalLoan(int loanNumber, String CustomerLastName, double loanAmt, double interestRate, int term){
-       super(loanNumber, CustomerLastName, loanAmt, interestRate, term);
+    public PersonalLoan(int loanNumber, String CustomerLastName, double loanAmt, int term){
+       super(loanNumber, CustomerLastName, loanAmt,term);
        double primeInterestRate = getInterestRate();
-       setInterestRate(primeInterestRate+2);
+       setInterestRate(100/(primeInterestRate+2));
    }
+    
+    public double calculateOwed(){
+        return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
+    }
 }
 
 //OK NA

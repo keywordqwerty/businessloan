@@ -77,6 +77,8 @@ public abstract class Loan implements LoanConstants{
         }
     }
     
+   
+    public abstract double calculateOwed();
     
     
     
@@ -88,7 +90,7 @@ public abstract class Loan implements LoanConstants{
     }
     
     
-      public Loan(int loanNumber, String CustomerLastName, double loanAmt, double interestRate, int term){
+      public Loan(int loanNumber, String CustomerLastName, double loanAmt,int term){
         this.loanNumber = loanNumber;
         this.customerLastName = customerLastName;
         this.loanAmt = loanAmt;
