@@ -13,12 +13,17 @@ package LoanPackage;
 public class BusinessLoan extends Loan{
     private double setInterestRate;
     
+    public BusinessLoan(){
+        
+    }
+    
    public BusinessLoan(int loanNumber, String CustomerLastName, double loanAmt, int term){ /*check application java kuwang pag implement sa jtable ang owed*/
        super(loanNumber, CustomerLastName, loanAmt, term);
        double primeInterestRate = getInterestRate();
        setInterestRate(primeInterestRate+1);
     }
    
+   @Override
    public double calculateOwed(){
        return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
    }

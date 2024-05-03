@@ -11,12 +11,18 @@ package LoanPackage;
 public class PersonalLoan extends Loan {
     private double setInterestRate;
     
+    public PersonalLoan(){    
+    }
+    
     public PersonalLoan(int loanNumber, String CustomerLastName, double loanAmt, int term){
        super(loanNumber, CustomerLastName, loanAmt,term);
        double primeInterestRate = getInterestRate();
        setInterestRate(100/(primeInterestRate+2));
    }
     
+    
+    
+    @Override
     public double calculateOwed(){
         return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
     }

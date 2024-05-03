@@ -8,12 +8,13 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
 import javax.swing.RowFilter;
+import java.util.ArrayList;
 /**
  *
  * @author Louis Valencia
  */
 public class LoansApplication extends javax.swing.JFrame {
-
+ ArrayList<Loan> loans = new ArrayList<>();
     /**
      * Creates new form LoansApplication
      */
@@ -147,7 +148,7 @@ public class LoansApplication extends javax.swing.JFrame {
 
         jLabel4.setText("Term:");
 
-        TERM_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Short ", "Medium ", "Long ", " " }));
+        TERM_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Short", "Medium", "Long", " " }));
         TERM_SELECTION.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         TERM_SELECTION.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,7 +258,7 @@ public class LoansApplication extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -387,30 +388,78 @@ public class LoansApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_LOAN_APPLICATION_BACK_BUTTONActionPerformed
 
     private void SUBMIT_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
-        /* APPLICANTNAME_FIELD.getText();
-        LOANAMOUNT_FIELD.getText(); */
-        
-        String choice = (String) TERM_SELECTION.getSelectedItem();
-        String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
-        if(LOANNUMBER_FIELD.getText().equals("")||APPLICANTNAME_FIELD.getText().equals("")|| LOANAMOUNT_FIELD.getText().equals("") ||choice.equals("None")||choice2.equals("None")){
+
+       String choice = (String) TERM_SELECTION.getSelectedItem();
+       String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
+       
+         if(LOANNUMBER_FIELD.getText().equals("")||APPLICANTNAME_FIELD.getText().equals("")|| LOANAMOUNT_FIELD.getText().equals("") ||choice.equals("None")||choice2.equals("None")){
             JOptionPane.showMessageDialog(rootPane, "All fields must be filled.");
-        }else{
-            int obj = 0;
             
-           if(TERM_SELECTION.getSelectedItem().equals("Short Term")){
-          /*TERM NI SIYA ---->*/     obj = LoanConstants.shortTerm;
-            }
-           
-            String obj2 = choice2.toString();
+        }else if(choice2.equals("Personal")){
+            //ARRAYLIST
+        PersonalLoan ploan = new PersonalLoan();      //PERSONAL LOAN     
+        ploan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText()));
+        ploan.setCustomerLastName(APPLICANTNAME_FIELD.getText());
+        ploan.setLoanAmt(Double.parseDouble(LOANAMOUNT_FIELD.getText()));
+        ploan.setTerm(Integer.parseInt((String)TERM_SELECTION.getSelectedItem()));
+        loans.add(ploan);
+        
+        //TABLE
+        PersonalLoan personalloan = new PersonalLoan(Integer.parseInt(LOANNUMBER_FIELD.getText()),APPLICANTNAME_FIELD.getText(),Double.parseDouble(LOANAMOUNT_FIELD.getText()),LoanConstants.shortTerm);
+        double amountOwed = personalloan.calculateOwed();
+         String data[] = {LOANNUMBER_FIELD.getText(),APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),TERM_SELECTION.getSelectedItem().toString(),choice2,String.valueOf(amountOwed)};
+           /*Loan # , Name, LoanAmou/*Loan # , Name, nt , Term, Loan Type, Amount owed*/
+         DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
             
-            BusinessLoan businessloan = new BusinessLoan(Integer.parseInt(LOANNUMBER_FIELD.getText()),APPLICANTNAME_FIELD.getText(),Double.parseDouble(LOANAMOUNT_FIELD.getText())); /*Loan # , Name, LoanAmount , Term, Loan Type, Amount owed*/
-            double amountOwed = businessloan.calculateOwed();
-            String data[] = {LOANNUMBER_FIELD.getText(),APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),String.valueOf(obj),obj2,String.valueOf(amountOwed)};
+           tblModel.insertRow(0,data);
+            JOptionPane.showMessageDialog(rootPane, "Data saved successfully.");
+            
+            
+        }else if(choice2.equals("Business")){
+            //ARRAYLIST
+            
+            BusinessLoan bloan = new BusinessLoan();            //BUSINESS LOAN
+        bloan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText()));
+        bloan.setCustomerLastName(APPLICANTNAME_FIELD.getText());
+        bloan.setLoanAmt(Double.parseDouble(LOANAMOUNT_FIELD.getText()));
+        String selectedTerm = (String) TERM_SELECTION.getSelectedItem();
+        int term;
+        switch (selectedTerm) {
+      case "Short":
+        term = LoanConstants.shortTerm;
+        bloan.setTerm(term);
+        break;
+        
+        case "Medium":
+        term = LoanConstants.mediumTerm;
+        bloan.setTerm(term);
+        break;
+        
+         case "Long":
+        term = LoanConstants.longTerm;
+        bloan.setTerm(term);
+        break;
+        }
+    loans.add(bloan);
+
+        
+        // TABLE
+        BusinessLoan businessloan = new BusinessLoan(Integer.parseInt(LOANNUMBER_FIELD.getText()),APPLICANTNAME_FIELD.getText(),Double.parseDouble(LOANAMOUNT_FIELD.getText()),LoanConstants.shortTerm);
+        double amountOwed = businessloan.calculateOwed();
+         String data[] = {LOANNUMBER_FIELD.getText(),APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),choice2,TERM_SELECTION.getSelectedItem().toString(),String.valueOf(amountOwed)}; 
+         /*Loan # , Name, loan amountnt , Term, Loan Type, Amount owed*/
+         
             DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
             
-            tblModel.insertRow(0,data);
+           tblModel.insertRow(0,data);
             JOptionPane.showMessageDialog(rootPane, "Data saved successfully.");
         }
+         
+         
+         
+       //------------------------------------- 
+//-----------------------------------------------
+   
 
     }//GEN-LAST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
 
@@ -455,6 +504,7 @@ public class LoansApplication extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+       
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -24,6 +24,9 @@ public abstract class Loan implements LoanConstants{
     private double interestRate;
     private int term;
 
+    public Loan() {
+    }
+
     
  
     //GETTERS
