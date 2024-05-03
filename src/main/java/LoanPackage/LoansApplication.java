@@ -401,8 +401,26 @@ public class LoansApplication extends javax.swing.JFrame {
         ploan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText()));
         ploan.setCustomerLastName(APPLICANTNAME_FIELD.getText());
         ploan.setLoanAmt(Double.parseDouble(LOANAMOUNT_FIELD.getText()));
-        ploan.setTerm(Integer.parseInt((String)TERM_SELECTION.getSelectedItem()));
+        String selectedTerm = (String) TERM_SELECTION.getSelectedItem();
+    int term;
+    switch (selectedTerm) {
+    case "Short":
+        term = LoanConstants.shortTerm;
+        ploan.setTerm(term);
+        break;
+        
+    case "Medium":
+        term = LoanConstants.mediumTerm;
+        ploan.setTerm(term);
+        break;
+        
+    case "Long":
+        term = LoanConstants.longTerm;
+        ploan.setTerm(term);
+        break;
+        }
         loans.add(ploan);
+
         
         //TABLE
         PersonalLoan personalloan = new PersonalLoan(Integer.parseInt(LOANNUMBER_FIELD.getText()),APPLICANTNAME_FIELD.getText(),Double.parseDouble(LOANAMOUNT_FIELD.getText()),LoanConstants.shortTerm);
