@@ -56,6 +56,8 @@ public class LoansApplication extends javax.swing.JFrame {
         DISPLAY_LOAN_BACK_BUTTON = new javax.swing.JButton();
         LOAN_NUMBER_FIELD1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        displayallbusinessloans = new javax.swing.JButton();
+        displayallpersonalloans = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -304,6 +306,20 @@ public class LoansApplication extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("SEARCH");
 
+        displayallbusinessloans.setText("Display Business Loans");
+        displayallbusinessloans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayallbusinessloansMouseClicked(evt);
+            }
+        });
+        displayallbusinessloans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayallbusinessloansActionPerformed(evt);
+            }
+        });
+
+        displayallpersonalloans.setText("Display Personal Loans");
+
         javax.swing.GroupLayout DISPLAYLOAN_PANELayout = new javax.swing.GroupLayout(DISPLAYLOAN_PANE);
         DISPLAYLOAN_PANE.setLayout(DISPLAYLOAN_PANELayout);
         DISPLAYLOAN_PANELayout.setHorizontalGroup(
@@ -312,18 +328,26 @@ public class LoansApplication extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(DISPLAY_LOAN_BACK_BUTTON)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(195, 195, 195))
+                    .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(DISPLAY_LOAN_BACK_BUTTON)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(displayallbusinessloans)
+                        .addGap(45, 45, 45)))
+                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(195, 195, 195))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
+                        .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(displayallpersonalloans, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
+            .addComponent(jScrollPane1)
         );
         DISPLAYLOAN_PANELayout.setVerticalGroup(
             DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,7 +357,10 @@ public class LoansApplication extends javax.swing.JFrame {
                     .addComponent(DISPLAY_LOAN_BACK_BUTTON)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(displayallbusinessloans)
+                    .addComponent(displayallpersonalloans))
                 .addGap(54, 54, 54)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -518,6 +545,16 @@ public class LoansApplication extends javax.swing.JFrame {
 
     }//GEN-LAST:event_LOAN_APPLICATION_BUTTONMouseClicked
 
+    private void displayallbusinessloansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayallbusinessloansActionPerformed
+
+         BusinessLoan = new BusinessLoan();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_displayallbusinessloansActionPerformed
+
+    private void displayallbusinessloansMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayallbusinessloansMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_displayallbusinessloansMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -571,6 +608,8 @@ public class LoansApplication extends javax.swing.JFrame {
     private javax.swing.JTabbedPane PANE;
     private javax.swing.JButton SUBMIT_APPLICATION_BUTTON;
     private javax.swing.JComboBox<String> TERM_SELECTION;
+    private javax.swing.JButton displayallbusinessloans;
+    private javax.swing.JButton displayallpersonalloans;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
