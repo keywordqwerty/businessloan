@@ -721,14 +721,19 @@ public class LoansApplication extends javax.swing.JFrame {
     }
     
     // Prompt the user to enter the prime interest rate
-    String primeRateStr = JOptionPane.showInputDialog(this, "Enter the prime interest rate:");
+    String primeRateStr = JOptionPane.showInputDialog(this, "Enter the prime interest rate: ");
     
     // Validate the input and store the prime interest rate
     if (primeRateStr != null && !primeRateStr.isEmpty()) {
         try {
             double primeRate = Double.parseDouble(primeRateStr);
             // Store the prime interest rate and set the flag to true
-            LoanConstants.setInterestRate(primeRate);
+            PersonalLoan personalLoan = new PersonalLoan();
+            personalLoan.setInterestRate(primeRate);
+            
+            // Create an instance of BusinessLoan and set the interest rate
+            BusinessLoan businessLoan = new BusinessLoan();
+            businessLoan.setInterestRate(primeRate);
             primeRateEntered = true;
             
             // Disable the button

@@ -12,7 +12,7 @@ package LoanPackage;
 
 public class BusinessLoan extends Loan{
     private double setInterestRate;
-    
+    private double primeInterestRate;
     public BusinessLoan(){
         
     }
@@ -23,9 +23,22 @@ public class BusinessLoan extends Loan{
        setInterestRate(primeInterestRate+1);
     }
    
+    public double getPrimeInterestRate() {
+        return primeInterestRate;
+    }
+    
+    public void setPrimeInterestRate(double primeInterestRate) {
+        this.primeInterestRate = primeInterestRate;
+    }
+   
    @Override
    public double calculateOwed(){
        return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
+   }
+   
+   @Override
+   public void setInterestRate(double rate){   
+       interestRate = rate;
    }
    }
 

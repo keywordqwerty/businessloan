@@ -21,7 +21,7 @@ public abstract class Loan implements LoanConstants{
     private int loanNumber;
     private String customerLastName;
     private double loanAmt;
-    private double interestRate;
+    protected double interestRate;
     private int term;
 
     public Loan() {
@@ -67,10 +67,10 @@ public abstract class Loan implements LoanConstants{
             this.loanAmt = loanAmt;
         }
     }
-
-    public void setInterestRate(double interestRate) {
+    public void setInterestRate(double interestRate){
         this.interestRate = interestRate;
     }
+
 
     public void setTerm(int term) {
         if(term == shortTerm || term == mediumTerm || term == longTerm){
