@@ -7,8 +7,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
+import javax.swing.RowSorter;
 import javax.swing.RowFilter;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
+
+
 /**
  *
  * @author Louis Valencia
@@ -21,7 +28,18 @@ public class LoansApplication extends javax.swing.JFrame {
     public LoansApplication() {
         initComponents();
     }
-
+       private int getTermValue(String term) {
+        switch (term) {
+            case "Short":
+                return LoanConstants.shortTerm;
+            case "Medium":
+                return LoanConstants.mediumTerm;
+            case "Long":
+                return LoanConstants.longTerm;
+            default:
+                return 0; // Return 0 for unknown terms
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,6 +54,7 @@ public class LoansApplication extends javax.swing.JFrame {
         LOAN_APPLICATION_BUTTON = new javax.swing.JToggleButton();
         LOAN_LIST_BUTTON = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
+        primeInterestRateButton = new javax.swing.JButton();
         LOANAPPLICATION_PANE = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         APPLICANTNAME_FIELD = new javax.swing.JTextField();
@@ -58,6 +77,7 @@ public class LoansApplication extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         displayallbusinessloans = new javax.swing.JButton();
         displayallpersonalloans = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +117,14 @@ public class LoansApplication extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("KOMPANYA NI PERCY CO.");
 
+        primeInterestRateButton.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        primeInterestRateButton.setText("Prime Interest Rate");
+        primeInterestRateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                primeInterestRateButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout MAIN_PANELayout = new javax.swing.GroupLayout(MAIN_PANE);
         MAIN_PANE.setLayout(MAIN_PANELayout);
         MAIN_PANELayout.setHorizontalGroup(
@@ -104,10 +132,12 @@ public class LoansApplication extends javax.swing.JFrame {
             .addGroup(MAIN_PANELayout.createSequentialGroup()
                 .addGap(120, 120, 120)
                 .addGroup(MAIN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(LOAN_APPLICATION_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(LOAN_LIST_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(280, Short.MAX_VALUE))
+                    .addComponent(primeInterestRateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(MAIN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(LOAN_APPLICATION_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LOAN_LIST_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
         MAIN_PANELayout.setVerticalGroup(
             MAIN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,7 +148,9 @@ public class LoansApplication extends javax.swing.JFrame {
                 .addComponent(LOAN_APPLICATION_BUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(LOAN_LIST_BUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(primeInterestRateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         PANE.addTab("MAIN", MAIN_PANE);
@@ -319,6 +351,18 @@ public class LoansApplication extends javax.swing.JFrame {
         });
 
         displayallpersonalloans.setText("Display Personal Loans");
+        displayallpersonalloans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayallpersonalloansActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Display all loans");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DISPLAYLOAN_PANELayout = new javax.swing.GroupLayout(DISPLAYLOAN_PANE);
         DISPLAYLOAN_PANE.setLayout(DISPLAYLOAN_PANELayout);
@@ -328,26 +372,29 @@ public class LoansApplication extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
                 .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(DISPLAY_LOAN_BACK_BUTTON)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(displayallbusinessloans)
-                        .addGap(45, 45, 45)))
-                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(DISPLAY_LOAN_BACK_BUTTON))
                     .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(195, 195, 195))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
-                        .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
+                        .addGap(14, 14, 14)
+                        .addComponent(displayallbusinessloans)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
+                            .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(249, 249, 249))
+                        .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap()))
+                    .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(displayallpersonalloans, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))))
-            .addComponent(jScrollPane1)
+                        .addGap(17, 17, 17))))
         );
         DISPLAYLOAN_PANELayout.setVerticalGroup(
             DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,11 +404,13 @@ public class LoansApplication extends javax.swing.JFrame {
                     .addComponent(DISPLAY_LOAN_BACK_BUTTON)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
                     .addComponent(displayallbusinessloans)
                     .addComponent(displayallpersonalloans))
-                .addGap(54, 54, 54)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel6)
@@ -388,11 +437,37 @@ public class LoansApplication extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LOAN_NUMBER_FIELD1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELD1KeyReleased
-        // TODO add your handling code here:
-        DefaultTableModel obj = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
-        TableRowSorter <DefaultTableModel> obj2 = new TableRowSorter<> (obj);
-        DISPLAY_LOAN_TABLE.setRowSorter(obj2);
-        obj2.setRowFilter(RowFilter.regexFilter(LOAN_NUMBER_FIELD1.getText()));
+                                                   
+    // TODO add your handling code here:
+       // Get the loan number entered in the text field
+       String loanNumberText = LOAN_NUMBER_FIELD1.getText();
+    if (loanNumberText.isEmpty()) {
+        // If the text field is empty, remove the row filter
+        DISPLAY_LOAN_TABLE.setRowSorter(null);
+        return;
+    }
+    
+    int loanNumber = 0;
+    try {
+        loanNumber = Integer.parseInt(loanNumberText);
+    } catch (NumberFormatException e) {
+        // Handle non-integer input if needed
+        return;
+    }
+    
+    // Check if the table has a RowSorter, if not, create a new one
+    if (DISPLAY_LOAN_TABLE.getRowSorter() == null) {
+        DISPLAY_LOAN_TABLE.setRowSorter(new TableRowSorter<>(DISPLAY_LOAN_TABLE.getModel()));
+    }
+    
+    // Get the TableRowSorter
+    TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>) DISPLAY_LOAN_TABLE.getRowSorter();
+    
+    // Clear any existing row filter
+    sorter.setRowFilter(null);
+    
+    // Create a row filter to match the loan number
+    sorter.setRowFilter(RowFilter.regexFilter("^" + loanNumber + "$", 0));
     }//GEN-LAST:event_LOAN_NUMBER_FIELD1KeyReleased
 
     private void LOAN_NUMBER_FIELD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELD1ActionPerformed
@@ -450,9 +525,21 @@ public class LoansApplication extends javax.swing.JFrame {
 
         
         //TABLE
-        PersonalLoan personalloan = new PersonalLoan(Integer.parseInt(LOANNUMBER_FIELD.getText()),APPLICANTNAME_FIELD.getText(),Double.parseDouble(LOANAMOUNT_FIELD.getText()),LoanConstants.shortTerm);
+        PersonalLoan personalloan = new PersonalLoan(
+                Integer.parseInt(LOANNUMBER_FIELD.getText()),
+                APPLICANTNAME_FIELD.getText(),
+                Double.parseDouble(LOANAMOUNT_FIELD.getText()),
+                getTermValue(TERM_SELECTION.getSelectedItem().toString())
+        );
         double amountOwed = personalloan.calculateOwed();
-         String data[] = {LOANNUMBER_FIELD.getText(),APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),TERM_SELECTION.getSelectedItem().toString(),choice2,String.valueOf(amountOwed)};
+         String data[] = {
+             LOANNUMBER_FIELD.getText(),
+             APPLICANTNAME_FIELD.getText(),
+             LOANAMOUNT_FIELD.getText(),
+            // TERM_SELECTION.getSelectedItem().toString(),
+            String.valueOf(getTermValue(TERM_SELECTION.getSelectedItem().toString())),
+             choice2,String.valueOf(amountOwed)
+         };
            /*Loan # , Name, LoanAmou/*Loan # , Name, nt , Term, Loan Type, Amount owed*/
          DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
             
@@ -489,9 +576,22 @@ public class LoansApplication extends javax.swing.JFrame {
 
         
         // TABLE
-        BusinessLoan businessloan = new BusinessLoan(Integer.parseInt(LOANNUMBER_FIELD.getText()),APPLICANTNAME_FIELD.getText(),Double.parseDouble(LOANAMOUNT_FIELD.getText()),LoanConstants.shortTerm);
+        BusinessLoan businessloan = new BusinessLoan(Integer.parseInt(
+                LOANNUMBER_FIELD.getText()),
+                APPLICANTNAME_FIELD.getText(),
+                Double.parseDouble(LOANAMOUNT_FIELD.getText()),
+                getTermValue(TERM_SELECTION.getSelectedItem().toString())
+        );
         double amountOwed = businessloan.calculateOwed();
-         String data[] = {LOANNUMBER_FIELD.getText(),APPLICANTNAME_FIELD.getText(),LOANAMOUNT_FIELD.getText(),choice2,TERM_SELECTION.getSelectedItem().toString(),String.valueOf(amountOwed)}; 
+         String data[] = {
+             LOANNUMBER_FIELD.getText(),
+             APPLICANTNAME_FIELD.getText(),
+             LOANAMOUNT_FIELD.getText(),
+             //TERM_SELECTION.getSelectedItem().toString(),
+             String.valueOf(getTermValue(TERM_SELECTION.getSelectedItem().toString())),
+             choice2,           
+             String.valueOf(amountOwed)
+         }; 
          /*Loan # , Name, loan amountnt , Term, Loan Type, Amount owed*/
          
             DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
@@ -546,8 +646,31 @@ public class LoansApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_LOAN_APPLICATION_BUTTONMouseClicked
 
     private void displayallbusinessloansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayallbusinessloansActionPerformed
-
-         BusinessLoan = new BusinessLoan();
+          DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+    model.setRowCount(0); // Clear existing rows from the table
+    
+    for (Loan loan : loans) {
+        if (loan instanceof BusinessLoan) {
+            BusinessLoan businessLoan = (BusinessLoan) loan;
+            String[] rowData = {
+                String.valueOf(businessLoan.getLoanNumber()),
+                businessLoan.getCustomerLastName(),
+                String.valueOf(businessLoan.getLoanAmt()),
+                String.valueOf(businessLoan.getTerm()),
+                "Business", // Loan Type
+                String.valueOf(businessLoan.calculateOwed())
+            };
+            model.addRow(rowData);
+        }
+    }
+    displayallbusinessloans.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        // Call the method that handles the button click event
+        displayallbusinessloansActionPerformed(evt);
+    }
+});
+  
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_displayallbusinessloansActionPerformed
 
@@ -555,6 +678,93 @@ public class LoansApplication extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_displayallbusinessloansMouseClicked
 
+    private void displayallpersonalloansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayallpersonalloansActionPerformed
+            // TODO add your handling code here:
+                  DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+    model.setRowCount(0); // Clear existing rows from the table
+    
+    for (Loan loan : loans) {
+        if (loan instanceof PersonalLoan) {
+            PersonalLoan personalloan = (PersonalLoan) loan;
+            String[] rowData = {
+                String.valueOf(personalloan.getLoanNumber()),
+                personalloan.getCustomerLastName(),
+                String.valueOf(personalloan.getLoanAmt()),
+                String.valueOf(personalloan.getTerm()),
+                "Personal", // Loan Type
+                String.valueOf(personalloan.calculateOwed())
+            };
+            model.addRow(rowData);
+        }
+        
+    }
+     displayallpersonalloans.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        // Call the method that handles the button click event
+        displayallpersonalloansActionPerformed(evt);
+    }
+     });
+             
+    }//GEN-LAST:event_displayallpersonalloansActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        displayAllLoans();
+    }//GEN-LAST:event_jButton1ActionPerformed
+        private boolean primeRateEntered = false;
+    private void primeInterestRateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeInterestRateButtonActionPerformed
+        // TODO add your handling code here:
+         if (primeRateEntered) {
+        // If already entered, show a message indicating that it cannot be clicked again
+        JOptionPane.showMessageDialog(this, "Prime interest rate already entered.");
+        return;
+    }
+    
+    // Prompt the user to enter the prime interest rate
+    String primeRateStr = JOptionPane.showInputDialog(this, "Enter the prime interest rate:");
+    
+    // Validate the input and store the prime interest rate
+    if (primeRateStr != null && !primeRateStr.isEmpty()) {
+        try {
+            double primeRate = Double.parseDouble(primeRateStr);
+            // Store the prime interest rate and set the flag to true
+            LoanConstants.setInterestRate(primeRate);
+            primeRateEntered = true;
+            
+            // Disable the button
+            primeInterestRateButton.setEnabled(false);
+        } catch (NumberFormatException e) {
+            // Handle invalid input if needed
+            JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid number.");
+        }
+    } else {
+        // Handle cancel or empty input
+        JOptionPane.showMessageDialog(this, "Prime interest rate input cancelled or empty.");
+    }
+    }//GEN-LAST:event_primeInterestRateButtonActionPerformed
+    private void displayAllLoans() {
+    jButton1.addActionListener(new ActionListener() {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+            model.setRowCount(0); // Clear existing rows from the table
+
+            // Iterate through the list of loans and add each loan to the table
+            for (Loan loan : loans) {
+                String[] rowData = {
+                    String.valueOf(loan.getLoanNumber()),
+                    loan.getCustomerLastName(),
+                    String.valueOf(loan.getLoanAmt()),
+                    String.valueOf(loan.getTerm()),
+                    loan instanceof PersonalLoan ? "Personal" : "Business", // Determine loan type
+                    String.valueOf(loan.calculateOwed())
+                };
+                model.addRow(rowData); // Add the row to the table
+            }
+        }
+    });
+}
     /**
      * @param args the command line arguments
      */
@@ -610,6 +820,7 @@ public class LoansApplication extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> TERM_SELECTION;
     private javax.swing.JButton displayallbusinessloans;
     private javax.swing.JButton displayallpersonalloans;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -619,5 +830,6 @@ public class LoansApplication extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton primeInterestRateButton;
     // End of variables declaration//GEN-END:variables
 }
