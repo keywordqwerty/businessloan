@@ -659,13 +659,16 @@ public class LoansApplication extends javax.swing.JFrame {
     for (Loan loan : loans) {
         if (loan instanceof BusinessLoan) {
             BusinessLoan businessLoan = (BusinessLoan) loan;
+            double amountOwed = businessLoan.calculateOwed();
+            String formattedAmountOwed = String.format("%.2f", amountOwed); // Format without scientific notation
+            
             String[] rowData = {
                 String.valueOf(businessLoan.getLoanNumber()),
                 businessLoan.getCustomerLastName(),
                 String.valueOf(businessLoan.getLoanAmt()),
                 String.valueOf(businessLoan.getTerm()),
                 "Business", // Loan Type
-                String.valueOf(businessLoan.calculateOwed())
+                formattedAmountOwed
             };
             model.addRow(rowData);
         }
@@ -693,13 +696,16 @@ public class LoansApplication extends javax.swing.JFrame {
     for (Loan loan : loans) {
         if (loan instanceof PersonalLoan) {
             PersonalLoan personalloan = (PersonalLoan) loan;
+            double amountOwed = personalloan.calculateOwed();
+            String formattedAmountOwed = String.format("%.2f", amountOwed);
             String[] rowData = {
                 String.valueOf(personalloan.getLoanNumber()),
                 personalloan.getCustomerLastName(),
                 String.valueOf(personalloan.getLoanAmt()),
                 String.valueOf(personalloan.getTerm()),
                 "Personal", // Loan Type
-                String.valueOf(personalloan.calculateOwed())
+                String.valueOf(amountOwed)
+                //String.valueOf(personalloan.calculateOwed())
             };
             model.addRow(rowData);
         }
