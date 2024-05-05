@@ -532,13 +532,15 @@ public class LoansApplication extends javax.swing.JFrame {
                 getTermValue(TERM_SELECTION.getSelectedItem().toString())
         );
         double amountOwed = personalloan.calculateOwed();
+        String formattedAmountOwed = String.format("%.2f", amountOwed);
          String data[] = {
              LOANNUMBER_FIELD.getText(),
              APPLICANTNAME_FIELD.getText(),
              LOANAMOUNT_FIELD.getText(),
-            // TERM_SELECTION.getSelectedItem().toString(),
+             TERM_SELECTION.getSelectedItem().toString(),
             String.valueOf(getTermValue(TERM_SELECTION.getSelectedItem().toString())),
-             choice2,String.valueOf(amountOwed)
+            formattedAmountOwed
+            // choice2,String.valueOf(amountOwed)
          };
            /*Loan # , Name, LoanAmou/*Loan # , Name, nt , Term, Loan Type, Amount owed*/
          DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
@@ -583,6 +585,7 @@ public class LoansApplication extends javax.swing.JFrame {
                 getTermValue(TERM_SELECTION.getSelectedItem().toString())
         );
         double amountOwed = businessloan.calculateOwed();
+        String formattedAmountOwed = String.format("%.2f", amountOwed); // Format with 2 decimal places
          String data[] = {
              LOANNUMBER_FIELD.getText(),
              APPLICANTNAME_FIELD.getText(),
@@ -590,8 +593,12 @@ public class LoansApplication extends javax.swing.JFrame {
              //TERM_SELECTION.getSelectedItem().toString(),
              String.valueOf(getTermValue(TERM_SELECTION.getSelectedItem().toString())),
              choice2,           
-             String.valueOf(amountOwed)
+             formattedAmountOwed
+                
+            // Format with 2 decimal places
+            // String.valueOf(amountOwed)
          }; 
+         System.out.println(formattedAmountOwed);
          /*Loan # , Name, loan amountnt , Term, Loan Type, Amount owed*/
          
             DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();

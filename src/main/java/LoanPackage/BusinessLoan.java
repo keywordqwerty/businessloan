@@ -28,7 +28,7 @@ public class BusinessLoan extends Loan{
     }
     
     public void setPrimeInterestRate(double primeInterestRate) {
-        this.primeInterestRate = (100/(primeInterestRate+1));
+        this.primeInterestRate = (primeInterestRate+1)/100;
     }
    
    /*@Override

@@ -22,7 +22,7 @@ public class PersonalLoan extends Loan {
    }
     
       public double getPrimeInterestRate() {
-        return (100/(primeInterestRate+2));
+        return (primeInterestRate+2)/100;
     }
 
     public void setPrimeInterestRate(double primeInterestRate) {
