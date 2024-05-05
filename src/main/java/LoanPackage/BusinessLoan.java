@@ -31,10 +31,16 @@ public class BusinessLoan extends Loan{
         this.primeInterestRate = primeInterestRate;
     }
    
-   @Override
+   /*@Override
    public double calculateOwed(){
        return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
-   }
+   }*/
+    @Override
+    public double calculateOwed() {
+        double interest = getLoanAmt() * getInterestRate() * getTerm();
+        // Total amount owed after the term
+        return getLoanAmt() + interest;    
+    }
    
    @Override
    public void setInterestRate(double rate){   

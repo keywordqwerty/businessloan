@@ -437,7 +437,7 @@ public class LoansApplication extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LOAN_NUMBER_FIELD1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELD1KeyReleased
-                                                   
+                                               
     // TODO add your handling code here:
        // Get the loan number entered in the text field
        String loanNumberText = LOAN_NUMBER_FIELD1.getText();
@@ -490,7 +490,7 @@ public class LoansApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_LOAN_APPLICATION_BACK_BUTTONActionPerformed
 
     private void SUBMIT_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
-
+ 
        String choice = (String) TERM_SELECTION.getSelectedItem();
        String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
        

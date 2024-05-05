@@ -11,7 +11,7 @@ package LoanPackage;
 public class PersonalLoan extends Loan {
     private double setInterestRate;
      private double primeInterestRate;
-
+     private double interestt;
     public PersonalLoan(){    
     }
     
@@ -30,14 +30,24 @@ public class PersonalLoan extends Loan {
     }
     
     @Override
-     public void setInterestRate(double rate) {
+     public void setInterestRate(double primeInterestRate) {
         // You can directly set the prime interest rate here
-        interestRate = rate;
+        this.primeInterestRate = primeInterestRate;
+         double totalInterestRate = primeInterestRate + 0.02;
+         super.setInterestRate(totalInterestRate);
+        
      }
      
-    @Override
+   /* @Override
     public double calculateOwed(){
         return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
+    }*/
+      @Override
+    public double calculateOwed() {
+        // Calculate interest for the term
+        double interest = getLoanAmt() * getInterestRate() * getTerm();
+        // Total amount owed after the term
+        return   interest;
     }
 }
 
