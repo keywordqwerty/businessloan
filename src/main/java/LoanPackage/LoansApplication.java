@@ -730,10 +730,12 @@ public class LoansApplication extends javax.swing.JFrame {
             // Store the prime interest rate and set the flag to true
             PersonalLoan personalLoan = new PersonalLoan();
             personalLoan.setInterestRate(primeRate);
+            System.out.println(personalLoan.getPrimeInterestRate());
             
             // Create an instance of BusinessLoan and set the interest rate
             BusinessLoan businessLoan = new BusinessLoan();
-            businessLoan.setInterestRate(primeRate);
+            businessLoan.setPrimeInterestRate(primeRate);
+            System.out.println(businessLoan.getPrimeInterestRate());
             primeRateEntered = true;
             
             // Disable the button
