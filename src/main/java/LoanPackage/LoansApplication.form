@@ -56,11 +56,9 @@
                       <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="primeInterestRateButton" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="LOAN_APPLICATION_BUTTON" max="32767" attributes="0"/>
-                              <Component id="LOAN_LIST_BUTTON" max="32767" attributes="0"/>
-                              <Component id="jLabel1" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="LOAN_APPLICATION_BUTTON" max="32767" attributes="0"/>
+                          <Component id="LOAN_LIST_BUTTON" max="32767" attributes="0"/>
+                          <Component id="jLabel1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="277" max="32767" attributes="0"/>
                   </Group>

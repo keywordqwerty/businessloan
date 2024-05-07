@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Louis Valencia
  */
-public class LoansApplication extends javax.swing.JFrame {
+public class LoansApplication extends javax.swing.JFrame implements LoanConstants {
  ArrayList<Loan> loans = new ArrayList<>();
     /**
      * Creates new form LoansApplication
@@ -507,17 +507,17 @@ public class LoansApplication extends javax.swing.JFrame {
     int term;
     switch (selectedTerm) {
     case "Short":
-        term = LoanConstants.shortTerm;
+        term = shortTerm;
         ploan.setTerm(term);
         break;
         
     case "Medium":
-        term = LoanConstants.mediumTerm;
+        term = mediumTerm;
         ploan.setTerm(term);
         break;
         
     case "Long":
-        term = LoanConstants.longTerm;
+        term = longTerm;
         ploan.setTerm(term);
         break;
         }
@@ -531,14 +531,16 @@ public class LoansApplication extends javax.swing.JFrame {
                 Double.parseDouble(LOANAMOUNT_FIELD.getText()),
                 getTermValue(TERM_SELECTION.getSelectedItem().toString())
         );
+        personalloan.setPrimeInterestRate(PROPERTIES);
         double amountOwed = personalloan.calculateOwed();
         String formattedAmountOwed = String.format("%.2f", amountOwed);
+      /*KANI AY*/  System.out.println(amountOwed);
          String data[] = {
              LOANNUMBER_FIELD.getText(),
              APPLICANTNAME_FIELD.getText(),
              LOANAMOUNT_FIELD.getText(),
-             TERM_SELECTION.getSelectedItem().toString(),
-            String.valueOf(getTermValue(TERM_SELECTION.getSelectedItem().toString())),
+             String.valueOf(getTermValue(TERM_SELECTION.getSelectedItem().toString())),
+             choice2,
             formattedAmountOwed
             // choice2,String.valueOf(amountOwed)
          };
@@ -560,17 +562,17 @@ public class LoansApplication extends javax.swing.JFrame {
         int term;
         switch (selectedTerm) {
       case "Short":
-        term = LoanConstants.shortTerm;
+        term = shortTerm;
         bloan.setTerm(term);
         break;
         
         case "Medium":
-        term = LoanConstants.mediumTerm;
+        term = mediumTerm;
         bloan.setTerm(term);
         break;
         
          case "Long":
-        term = LoanConstants.longTerm;
+        term = longTerm;
         bloan.setTerm(term);
         break;
         }
@@ -584,13 +586,14 @@ public class LoansApplication extends javax.swing.JFrame {
                 Double.parseDouble(LOANAMOUNT_FIELD.getText()),
                 getTermValue(TERM_SELECTION.getSelectedItem().toString())
         );
+        businessloan.setPrimeInterestRate(PROPERTIES);
         double amountOwed = businessloan.calculateOwed();
         String formattedAmountOwed = String.format("%.2f", amountOwed); // Format with 2 decimal places
+        System.out.println(formattedAmountOwed);
          String data[] = {
              LOANNUMBER_FIELD.getText(),
              APPLICANTNAME_FIELD.getText(),
              LOANAMOUNT_FIELD.getText(),
-             //TERM_SELECTION.getSelectedItem().toString(),
              String.valueOf(getTermValue(TERM_SELECTION.getSelectedItem().toString())),
              choice2,           
              formattedAmountOwed
@@ -598,7 +601,7 @@ public class LoansApplication extends javax.swing.JFrame {
             // Format with 2 decimal places
             // String.valueOf(amountOwed)
          }; 
-         System.out.println(formattedAmountOwed);
+        
          /*Loan # , Name, loan amountnt , Term, Loan Type, Amount owed*/
          
             DefaultTableModel tblModel = (DefaultTableModel)DISPLAY_LOAN_TABLE.getModel();
@@ -747,7 +750,7 @@ public class LoansApplication extends javax.swing.JFrame {
             
             // Create an instance of BusinessLoan and set the interest rate
             BusinessLoan businessLoan = new BusinessLoan();
-            businessLoan.setPrimeInterestRate(primeRate);
+            businessLoan.setInterestRate(primeRate);
             System.out.println(businessLoan.getPrimeInterestRate());
             primeRateEntered = true;
             

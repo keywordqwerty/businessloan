@@ -11,41 +11,44 @@ package LoanPackage;
 
 
 public class BusinessLoan extends Loan{
-    private double setInterestRate;
     private double primeInterestRate;
-    public BusinessLoan(){
-        
+     private double totalInterestRate;
+    public BusinessLoan(){    
     }
     
-   public BusinessLoan(int loanNumber, String CustomerLastName, double loanAmt, int term){ /*check application java kuwang pag implement sa jtable ang owed*/
-       super(loanNumber, CustomerLastName, loanAmt, term);
+    public BusinessLoan(int loanNumber, String CustomerLastName, double loanAmt, int term){
+       super(loanNumber, CustomerLastName, loanAmt,term);
        double primeInterestRate = getInterestRate();
-       setInterestRate(primeInterestRate+1);
+       this.setInterestRate(primeInterestRate/100);
+   }
+    
+      public double getPrimeInterestRate() {
+        return (primeInterestRate+1)/100;
     }
-   
-    public double getPrimeInterestRate() {
-        return primeInterestRate;
+
+    public void setPrimeInterestRate(double primeInterestRate) {
+        this.primeInterestRate = primeInterestRate;
     }
     
-    public void setPrimeInterestRate(double primeInterestRate) {
-        this.primeInterestRate = (primeInterestRate+1)/100;
-    }
-   
-   /*@Override
-   public double calculateOwed(){
-       return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
-   }*/
     @Override
+     public void setInterestRate(double primeInterestRate) {
+        // You can directly set the prime interest rate here
+        this.primeInterestRate = primeInterestRate;//wat gamit
+         this.totalInterestRate = primeInterestRate + 0.01;
+         super.setInterestRate(this.totalInterestRate);
+     }
+     
+   /* @Override
+    public double calculateOwed(){
+        return getLoanAmt()+(getLoanAmt() * setInterestRate * getTerm());
+    }*/
+      @Override
     public double calculateOwed() {
-        double interest = getLoanAmt() * getInterestRate() * getTerm();
-        // Total amount owed after the term
-        return getLoanAmt() + interest;    
+        // Calculate interest for the term
+        //OK NA
+        return this.getLoanAmt()*(float)Math.pow(1+this.getPrimeInterestRate(),getTerm());
+       //OK NA
     }
-   
-   @Override
-   public void setInterestRate(double rate){   
-       interestRate = rate;
-   }
    }
 
 //OK NA
