@@ -12,7 +12,7 @@ import javax.swing.RowFilter;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.awt.event.*;
 
 
 
@@ -493,11 +493,33 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
  
        String choice = (String) TERM_SELECTION.getSelectedItem();
        String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
-       
-         if(LOANNUMBER_FIELD.getText().equals("")||APPLICANTNAME_FIELD.getText().equals("")|| LOANAMOUNT_FIELD.getText().equals("") ||choice.equals("None")||choice2.equals("None")){
-            JOptionPane.showMessageDialog(rootPane, "All fields must be filled.");
-            
-        }else if(choice2.equals("Personal")){
+       String applicantvar = LOANNUMBER_FIELD.getText();
+        try{
+            Integer.parseInt(LOANNUMBER_FIELD.getText());
+            Integer.parseInt(LOANAMOUNT_FIELD.getText());
+            }catch (NumberFormatException ex){
+             JOptionPane.showMessageDialog(rootPane, "WHAT YOU ENTERED IS NOT AN INTEGER >:(");
+             LOANNUMBER_FIELD.setText("");
+             LOANAMOUNT_FIELD.setText("");
+             APPLICANTNAME_FIELD.setText("");
+            }
+             
+        try{
+            Integer.parseInt(APPLICANTNAME_FIELD.getText());
+            Integer.parseInt(applicantvar);
+            JOptionPane.showMessageDialog(rootPane, "WHAT YOU ENTERED IS NOT A STRING >:(");
+            APPLICANTNAME_FIELD.setText("");
+        }catch(NumberFormatException ex){}
+        
+            System.out.println("HELLOOO");
+         if(LOANNUMBER_FIELD.getText().equals("")||
+                 APPLICANTNAME_FIELD.getText().equals("")||
+                 LOANAMOUNT_FIELD.getText().equals("") ||
+                 choice.equals("None")||
+                 choice2.equals("None")){
+            JOptionPane.showMessageDialog(rootPane, "All fields must be filled with the correct information.");
+        }      
+         else if(choice2.equals("Personal")){
             //ARRAYLIST
         PersonalLoan ploan = new PersonalLoan();      //PERSONAL LOAN     
         ploan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText()));
@@ -553,7 +575,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
             
         }else if(choice2.equals("Business")){
             //ARRAYLIST
-            
+            //Loan # ,  Name,    Loan Amount , Term , loan type, amountowed
             BusinessLoan bloan = new BusinessLoan();            //BUSINESS LOAN
         bloan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText()));
         bloan.setCustomerLastName(APPLICANTNAME_FIELD.getText());
@@ -647,7 +669,13 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
 
     private void LOAN_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BUTTONActionPerformed
         // TODO add your handling code here:
-        PANE.setSelectedComponent(LOANAPPLICATION_PANE);
+        if(primeRateEntered == true){
+        PANE.setSelectedComponent(LOANAPPLICATION_PANE);      
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Please enter the prime interest rate before filling up the form.");
+        }
+            
+        
     }//GEN-LAST:event_LOAN_APPLICATION_BUTTONActionPerformed
 
     private void LOAN_APPLICATION_BUTTONMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LOAN_APPLICATION_BUTTONMouseClicked
