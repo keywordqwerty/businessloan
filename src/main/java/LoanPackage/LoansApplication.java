@@ -135,10 +135,9 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                 .addGap(120, 120, 120)
                 .addGroup(MAIN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(primeInterestRateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(MAIN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(LOAN_APPLICATION_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(LOAN_LIST_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(LOAN_APPLICATION_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LOAN_LIST_BUTTON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(277, Short.MAX_VALUE))
         );
         MAIN_PANELayout.setVerticalGroup(
@@ -383,7 +382,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                     .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(displayallbusinessloans)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
@@ -410,8 +409,8 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                 .addGap(13, 13, 13)
                 .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(displayallbusinessloans)
-                    .addComponent(displayallpersonalloans))
+                    .addComponent(displayallpersonalloans)
+                    .addComponent(displayallbusinessloans, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -490,12 +489,45 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         // TODO add your handling code here:
         PANE.setSelectedComponent(MAIN_PANE);
     }//GEN-LAST:event_LOAN_APPLICATION_BACK_BUTTONActionPerformed
-
+  private boolean loanNumberExists(int loanNumber) {
+    for (Loan loan : loans) {
+        if (loan.getLoanNumber() == loanNumber) {
+            return true;
+        }
+    }
+    return false;
+  }
     private void SUBMIT_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
  
        String choice = (String) TERM_SELECTION.getSelectedItem();
        String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
        String applicantvar = LOANNUMBER_FIELD.getText();
+       //-----------------
+       
+       
+        int loanNumber = Integer.parseInt(LOANNUMBER_FIELD.getText());
+    if (loanNumberExists(loanNumber)) {
+        JOptionPane.showMessageDialog(rootPane, "Loan number already exists. Please enter a different loan number.");
+        return;
+    }
+    
+    try {
+        // Validate loan number and loan amount
+        int loanNum = Integer.parseInt(LOANNUMBER_FIELD.getText());
+        int loanAmt = Integer.parseInt(LOANAMOUNT_FIELD.getText());
+        String applicantName = APPLICANTNAME_FIELD.getText();
+        
+        // Validate if the loan number and loan amount are positive
+        if (loanNum <= 0 || loanAmt <= 0 || applicantName.isEmpty() || choice.equals("None") || choice2.equals("None")) {
+            JOptionPane.showMessageDialog(rootPane, "All fields must be filled with the correct information.");
+            return;
+        }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(rootPane, "Invalid input. Loan number and loan amount must be integers.");
+        return;
+    }
+       
+       //---------------
         try{
             Integer.parseInt(LOANNUMBER_FIELD.getText());
             Integer.parseInt(LOANAMOUNT_FIELD.getText());
@@ -564,8 +596,9 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                 getTermValue(TERM_SELECTION.getSelectedItem().toString())
         );
         personalloan.setPrimeInterestRate(PROPERTIES);
-        double amountOwed = personalloan.calculateOwed();
-        String formattedAmountOwed = String.format("%.2f", amountOwed);
+           BigDecimal amountOwed = BigDecimal.valueOf(personalloan.calculateOwed());
+             String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+       
       /*KANI AY*/  System.out.println(amountOwed);
          String data[] = {
              LOANNUMBER_FIELD.getText(),
@@ -620,8 +653,8 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                 getTermValue(TERM_SELECTION.getSelectedItem().toString())
         );
         businessloan.setPrimeInterestRate(PROPERTIES);
-        double amountOwed = businessloan.calculateOwed();
-        String formattedAmountOwed = String.format("%.2f", amountOwed); // Format with 2 decimal places
+           BigDecimal amountOwed = BigDecimal.valueOf(businessloan.calculateOwed());
+            String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
         System.out.println(formattedAmountOwed);
          String data[] = {
              LOANNUMBER_FIELD.getText(),
@@ -642,7 +675,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
            tblModel.insertRow(0,data);
             JOptionPane.showMessageDialog(rootPane, "Data saved successfully.");
         }
-         
+       
          
          
        //------------------------------------- 
@@ -697,13 +730,17 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     private void displayallbusinessloansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayallbusinessloansActionPerformed
           DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
     model.setRowCount(0); // Clear existing rows from the table
+      
+    boolean businessLoansExist = false;
+    
     
     for (Loan loan : loans) {
         if (loan instanceof BusinessLoan) {
             BusinessLoan businessLoan = (BusinessLoan) loan;
             businessLoan.setPrimeInterestRate(PROPERTIES);
-            double amountOwed = businessLoan.calculateOwed();
-            String formattedAmountOwed = String.format("%.2f", amountOwed); // Format without scientific notation
+               BigDecimal amountOwed = BigDecimal.valueOf(businessLoan.calculateOwed());
+                 String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+          
             
             String[] rowData = {
                 String.valueOf(businessLoan.getLoanNumber()),
@@ -714,8 +751,16 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                 formattedAmountOwed
             };
             model.addRow(rowData);
+            businessLoansExist = true;
+            
         }
+        
     }
+        if (!businessLoansExist) {
+        JOptionPane.showMessageDialog(rootPane, "No business loans available.");
+            }
+        
+        
     displayallbusinessloans.addActionListener(new java.awt.event.ActionListener() {
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // Call the method that handles the button click event
@@ -735,26 +780,34 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
             // TODO add your handling code here:
                   DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
     model.setRowCount(0); // Clear existing rows from the table
-    
+     boolean personalLoansExist = false;
+     
+     
     for (Loan loan : loans) {
         if (loan instanceof PersonalLoan) {
             PersonalLoan personalloan = (PersonalLoan) loan;
             personalloan.setPrimeInterestRate(PROPERTIES);
-            double amountOwed = personalloan.calculateOwed();
-            String formattedAmountOwed = String.format("%.2f", amountOwed);
+               BigDecimal amountOwed = BigDecimal.valueOf(personalloan.calculateOwed());
+              String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();         
             String[] rowData = {
                 String.valueOf(personalloan.getLoanNumber()),
                 personalloan.getCustomerLastName(),
                 String.valueOf(personalloan.getLoanAmt()),
                 String.valueOf(personalloan.getTerm()),
                 "Personal", // Loan Type
-                String.valueOf(amountOwed)
+               formattedAmountOwed
                 //String.valueOf(personalloan.calculateOwed())
             };
             model.addRow(rowData);
+             personalLoansExist = true;
         }
         
     }
+     
+    if (!personalLoansExist) {
+        JOptionPane.showMessageDialog(rootPane, "No personal loans available.");
+    }
+        
      displayallpersonalloans.addActionListener(new java.awt.event.ActionListener() {
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         // Call the method that handles the button click event
@@ -813,19 +866,27 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         public void actionPerformed(ActionEvent e) {
             DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
             model.setRowCount(0); // Clear existing rows from the table
-
+                boolean loansExist = false;
+    
             // Iterate through the list of loans and add each loan to the table
             for (Loan loan : loans) {
+                   BigDecimal amountOwed = BigDecimal.valueOf(loan.calculateOwed());
+                 String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+    
                 String[] rowData = {
                     String.valueOf(loan.getLoanNumber()),
                     loan.getCustomerLastName(),
                     String.valueOf(loan.getLoanAmt()),
                     String.valueOf(loan.getTerm()),
                     loan instanceof PersonalLoan ? "Personal" : "Business", // Determine loan type
-                    String.valueOf(loan.calculateOwed())
+                    formattedAmountOwed
                 };
                 model.addRow(rowData); // Add the row to the table
+                 loansExist = true;
             }
+             if (!loansExist) {
+        JOptionPane.showMessageDialog(rootPane, "No loans available.");
+        }
         }
     });
 }
