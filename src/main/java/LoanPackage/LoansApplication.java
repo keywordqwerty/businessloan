@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 
 
@@ -511,21 +513,29 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
             APPLICANTNAME_FIELD.setText("");
         }catch(NumberFormatException ex){}
         
+        
             System.out.println("HELLOOO");
+            if(Integer.parseInt(LOANAMOUNT_FIELD.getText()) > 100000){
+            JOptionPane.showMessageDialog(rootPane, "Maximum loan amount is 100,000. Your loan amount is automatically set to 100,000.");
+            LOANAMOUNT_FIELD.setText("100000");
+            }
          if(LOANNUMBER_FIELD.getText().equals("")||
+                 LOANNUMBER_FIELD.getText().equals("0")||
                  APPLICANTNAME_FIELD.getText().equals("")||
                  LOANAMOUNT_FIELD.getText().equals("") ||
+                 LOANAMOUNT_FIELD.getText().equals("0")||
                  choice.equals("None")||
                  choice2.equals("None")){
             JOptionPane.showMessageDialog(rootPane, "All fields must be filled with the correct information.");
-        }      
+        }
+              
          else if(choice2.equals("Personal")){
             //ARRAYLIST
         PersonalLoan ploan = new PersonalLoan();      //PERSONAL LOAN     
-        ploan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText()));
-        ploan.setCustomerLastName(APPLICANTNAME_FIELD.getText());
-        ploan.setLoanAmt(Double.parseDouble(LOANAMOUNT_FIELD.getText()));
-        String selectedTerm = (String) TERM_SELECTION.getSelectedItem();
+        ploan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText())); //Loan #
+        ploan.setCustomerLastName(APPLICANTNAME_FIELD.getText()); //Name
+        ploan.setLoanAmt(Double.parseDouble(LOANAMOUNT_FIELD.getText())); //Loan amount
+        String selectedTerm = (String) TERM_SELECTION.getSelectedItem(); //Term
     int term;
     switch (selectedTerm) {
     case "Short":
@@ -581,6 +591,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         bloan.setCustomerLastName(APPLICANTNAME_FIELD.getText());
         bloan.setLoanAmt(Double.parseDouble(LOANAMOUNT_FIELD.getText()));
         String selectedTerm = (String) TERM_SELECTION.getSelectedItem();
+        
         int term;
         switch (selectedTerm) {
       case "Short":
@@ -690,6 +701,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     for (Loan loan : loans) {
         if (loan instanceof BusinessLoan) {
             BusinessLoan businessLoan = (BusinessLoan) loan;
+            businessLoan.setPrimeInterestRate(PROPERTIES);
             double amountOwed = businessLoan.calculateOwed();
             String formattedAmountOwed = String.format("%.2f", amountOwed); // Format without scientific notation
             
@@ -727,6 +739,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     for (Loan loan : loans) {
         if (loan instanceof PersonalLoan) {
             PersonalLoan personalloan = (PersonalLoan) loan;
+            personalloan.setPrimeInterestRate(PROPERTIES);
             double amountOwed = personalloan.calculateOwed();
             String formattedAmountOwed = String.format("%.2f", amountOwed);
             String[] rowData = {
