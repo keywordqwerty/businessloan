@@ -438,10 +438,11 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                     .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(loansearch))
                 .addGap(13, 13, 13)
-                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(displayallpersonalloans)
-                    .addComponent(displayallbusinessloans, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(displayallbusinessloans, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(displayallpersonalloans)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -694,7 +695,8 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         businessloan.setPrimeInterestRate(PROPERTIES);
            BigDecimal amountOwed = BigDecimal.valueOf(businessloan.calculateOwed());
             String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
-        System.out.println(formattedAmountOwed);
+            System.out.println(amountOwed + " < --amount owed ni ");
+        System.out.println(formattedAmountOwed + "  <--- formattedAmountOwed ni ");
          String data[] = {
              LOANNUMBER_FIELD.getText(),
              APPLICANTNAME_FIELD.getText(),

@@ -35,6 +35,7 @@ public class BusinessLoan extends Loan{
         // You can directly set the prime interest rate here
         this.primeInterestRate = primeInterestRate;//wat gamit
          this.totalInterestRate = primeInterestRate + 0.01;
+         System.out.println("from setInterestRate from businessloan class: totalInterestRate: " + this.totalInterestRate);
          super.setInterestRate(this.totalInterestRate);
      }
      
@@ -46,6 +47,8 @@ public class BusinessLoan extends Loan{
     public double calculateOwed() {
         // Calculate interest for the term
         //OK NA
+        System.out.println("from businessloan class: calculateOwed: getprimeinterestrate ->> " + this.getPrimeInterestRate());
+        
         return this.getLoanAmt()*(float)Math.pow(1+this.getPrimeInterestRate(),getTerm());
        //OK NA
     }
