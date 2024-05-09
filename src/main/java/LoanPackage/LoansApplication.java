@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import javax.swing.Timer;
 
 
 
@@ -24,11 +25,17 @@ import java.math.RoundingMode;
  */
 public class LoansApplication extends javax.swing.JFrame implements LoanConstants {
  ArrayList<Loan> loans = new ArrayList<>();
+  private Timer waitTimer;
+    
     /**
      * Creates new form LoansApplication
      */
     public LoansApplication() {
         initComponents();
+        
+          for (int i = 0; i < PANE.getTabCount(); i++) {
+        PANE.setEnabledAt(i, false);
+    }
     }
        private int getTermValue(String term) {
         switch (term) {
@@ -70,6 +77,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         LOAN_APPLICATION_BACK_BUTTON = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         LOANNUMBER_FIELD = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         DISPLAYLOAN_PANE = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -80,6 +88,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         displayallbusinessloans = new javax.swing.JButton();
         displayallpersonalloans = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        loansearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -217,6 +226,13 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
             }
         });
 
+        jButton2.setText("Clear all");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout LOANAPPLICATION_PANELayout = new javax.swing.GroupLayout(LOANAPPLICATION_PANE);
         LOANAPPLICATION_PANE.setLayout(LOANAPPLICATION_PANELayout);
         LOANAPPLICATION_PANELayout.setHorizontalGroup(
@@ -238,14 +254,16 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                             .addComponent(TERM_SELECTION, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(APPLICANTNAME_FIELD, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                             .addComponent(LOANAMOUNT_FIELD, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                            .addComponent(LOANNUMBER_FIELD)))
+                            .addComponent(LOANNUMBER_FIELD))
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton2))
                     .addGroup(LOANAPPLICATION_PANELayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(LOAN_APPLICATION_BACK_BUTTON))
                     .addGroup(LOANAPPLICATION_PANELayout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(SUBMIT_APPLICATION_BUTTON)))
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         LOANAPPLICATION_PANELayout.setVerticalGroup(
             LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +277,9 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(APPLICANTNAME_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(APPLICANTNAME_FIELD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LOANAPPLICATION_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -365,6 +385,13 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
             }
         });
 
+        loansearch.setText("Confirm search");
+        loansearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loansearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout DISPLAYLOAN_PANELayout = new javax.swing.GroupLayout(DISPLAYLOAN_PANE);
         DISPLAYLOAN_PANE.setLayout(DISPLAYLOAN_PANELayout);
         DISPLAYLOAN_PANELayout.setHorizontalGroup(
@@ -382,12 +409,14 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                     .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(displayallbusinessloans)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DISPLAYLOAN_PANELayout.createSequentialGroup()
                             .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(249, 249, 249))
+                            .addGap(18, 18, 18)
+                            .addComponent(loansearch)
+                            .addGap(153, 153, 153))
                         .addGroup(DISPLAYLOAN_PANELayout.createSequentialGroup()
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap()))
@@ -405,7 +434,9 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                     .addComponent(DISPLAY_LOAN_BACK_BUTTON)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LOAN_NUMBER_FIELD1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loansearch))
                 .addGap(13, 13, 13)
                 .addGroup(DISPLAYLOAN_PANELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -441,7 +472,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                                                
     // TODO add your handling code here:
        // Get the loan number entered in the text field
-       String loanNumberText = LOAN_NUMBER_FIELD1.getText();
+     /*  String loanNumberText = LOAN_NUMBER_FIELD1.getText();
     if (loanNumberText.isEmpty()) {
         // If the text field is empty, remove the row filter
         DISPLAY_LOAN_TABLE.setRowSorter(null);
@@ -469,6 +500,9 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     
     // Create a row filter to match the loan number
     sorter.setRowFilter(RowFilter.regexFilter("^" + loanNumber + "$", 0));
+    
+        
+    */
     }//GEN-LAST:event_LOAN_NUMBER_FIELD1KeyReleased
 
     private void LOAN_NUMBER_FIELD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_NUMBER_FIELD1ActionPerformed
@@ -502,8 +536,13 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
        String choice = (String) TERM_SELECTION.getSelectedItem();
        String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
        String applicantvar = LOANNUMBER_FIELD.getText();
+         String loanNumberText = LOANNUMBER_FIELD.getText();
+            String loanAmountText = LOANAMOUNT_FIELD.getText();
        //-----------------
-       
+       if (!loanNumberText.matches("\\d+")) {
+        JOptionPane.showMessageDialog(rootPane, "Invalid loan number. Please enter a valid integer.");
+        return;
+    }
        
         int loanNumber = Integer.parseInt(LOANNUMBER_FIELD.getText());
     if (loanNumberExists(loanNumber)) {
@@ -859,6 +898,63 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         JOptionPane.showMessageDialog(this, "Prime interest rate input cancelled or empty.");
     }
     }//GEN-LAST:event_primeInterestRateButtonActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+            LOANNUMBER_FIELD.setText("");
+            APPLICANTNAME_FIELD.setText("");
+            LOANAMOUNT_FIELD.setText("");
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void loansearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loansearchActionPerformed
+        // Get the loan number entered in the LOAN_NUMBER_FIELD1 text field
+    String loanNumberText = LOAN_NUMBER_FIELD1.getText();
+
+    // Check if the input contains only digits
+    if (!loanNumberText.matches("\\d+")) {
+        JOptionPane.showMessageDialog(rootPane, "Invalid input. Loan number must be a positive integer.");
+        return; // Exit the method
+    }
+
+    try {
+        int loanNumberToSearch = Integer.parseInt(loanNumberText);
+
+        // Search for the loan with the specified loan number
+        Loan foundLoan = null;
+        for (Loan loan : loans) {
+            if (loan.getLoanNumber() == loanNumberToSearch) {
+                foundLoan = loan;
+                break;
+            }
+        }
+
+        // If a loan with the specified loan number is found, populate the DISPLAY_LOAN_TABLE
+        if (foundLoan != null) {
+            DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+            model.setRowCount(0); // Clear existing rows from the table
+
+            // Populate the table with the details of the found loan
+            BigDecimal amountOwed = BigDecimal.valueOf(foundLoan.calculateOwed());
+            String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+            String[] rowData = {
+                String.valueOf(foundLoan.getLoanNumber()),
+                foundLoan.getCustomerLastName(),
+                String.valueOf(foundLoan.getLoanAmt()),
+                String.valueOf(foundLoan.getTerm()),
+                foundLoan instanceof PersonalLoan ? "Personal" : "Business", // Determine loan type
+                formattedAmountOwed
+            };
+            model.addRow(rowData);
+        } else {
+            // If no loan with the specified loan number is found, display a message
+            JOptionPane.showMessageDialog(rootPane, "No loan found with the specified loan number.");
+        }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(rootPane, "Invalid input. Loan number must be a positive integer.");
+    }
+                // TODO add your handling code here:
+    }//GEN-LAST:event_loansearchActionPerformed
     private void displayAllLoans() {
     jButton1.addActionListener(new ActionListener() {
         
@@ -946,6 +1042,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     private javax.swing.JButton displayallbusinessloans;
     private javax.swing.JButton displayallpersonalloans;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -955,6 +1052,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton loansearch;
     private javax.swing.JButton primeInterestRateButton;
     // End of variables declaration//GEN-END:variables
 }
