@@ -45,7 +45,7 @@ public class PersonalLoan extends Loan {
         // Calculate interest for the term
         //OK NA
        // return this.getLoanAmt()*(float)Math.pow(1+this.getPrimeInterestRate(),getTerm());
-       System.out.println("PERSONALLOAN CLASS GETPRIMEINTERESTRATE() RESULT: " + getPrimeInterestRate());
+      // System.out.println("PERSONALLOAN CLASS GETPRIMEINTERESTRATE() RESULT: " + getPrimeInterestRate());
        return this.getLoanAmt() + (getLoanAmt() * (this.getPrimeInterestRate()-0.02) * getTerm());
        //OK NA
     }
