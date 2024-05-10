@@ -192,7 +192,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
 
         jLabel4.setText("Term:");
 
-        TERM_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Short", "Medium", "Long", " " }));
+        TERM_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Short", "Medium", "Long" }));
         TERM_SELECTION.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         TERM_SELECTION.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
