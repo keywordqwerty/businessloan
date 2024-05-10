@@ -32,7 +32,7 @@ public class PersonalLoan extends Loan {
      public void setInterestRate(double primeInterestRate) {
         // You can directly set the prime interest rate here
         this.primeInterestRate = primeInterestRate;//wat gamit
-         this.totalInterestRate = primeInterestRate + 0.02;
+         this.totalInterestRate = this.primeInterestRate + 0.02;
          super.setInterestRate(this.totalInterestRate);
      }
      
@@ -44,7 +44,9 @@ public class PersonalLoan extends Loan {
     public double calculateOwed() {
         // Calculate interest for the term
         //OK NA
-        return this.getLoanAmt()*(float)Math.pow(1+this.getPrimeInterestRate(),getTerm());
+       // return this.getLoanAmt()*(float)Math.pow(1+this.getPrimeInterestRate(),getTerm());
+       System.out.println("PERSONALLOAN CLASS GETPRIMEINTERESTRATE() RESULT: " + getPrimeInterestRate());
+       return this.getLoanAmt() + (getLoanAmt() * (this.getPrimeInterestRate()-0.02) * getTerm());
        //OK NA
     }
 }
