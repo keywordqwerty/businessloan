@@ -19,7 +19,7 @@ public class BusinessLoan extends Loan{
     public BusinessLoan(int loanNumber, String CustomerLastName, double loanAmt, int term){
        super(loanNumber, CustomerLastName, loanAmt,term);
        double primeInterestRate = getInterestRate();
-       System.out.println(primeInterestRate + " <---from businessloan class constructor");
+     //  System.out.println(primeInterestRate + " <---from businessloan class constructor");
        this.setInterestRate(primeInterestRate/100);
    }
     
@@ -36,7 +36,7 @@ public class BusinessLoan extends Loan{
         // You can directly set the prime interest rate here
         this.primeInterestRate = primeInterestRate;//wat gamit
         this.totalInterestRate = this.primeInterestRate + 0.01;
-         System.out.println("from setInterestRate from businessloan class: totalInterestRate: " + this.totalInterestRate);
+       //  System.out.println("from setInterestRate from businessloan class: totalInterestRate: " + this.totalInterestRate);
          super.setInterestRate(this.totalInterestRate);
      }
      
@@ -48,8 +48,8 @@ public class BusinessLoan extends Loan{
     public double calculateOwed() {
         // Calculate interest for the term
         //OK NA
-        System.out.println("From calculateOwed method in BusinessLoan Class: the getTerm():  " + getTerm());
-        System.out.println("from businessloan class: calculateOwed: getprimeinterestrate ->> " + (this.getPrimeInterestRate()-0.02));
+      //  System.out.println("From calculateOwed method in BusinessLoan Class: the getTerm():  " + getTerm());
+      //  System.out.println("from businessloan class: calculateOwed: getprimeinterestrate ->> " + (this.getPrimeInterestRate()-0.02));
         
        //return this.getLoanAmt()*(float)Math.pow(1+(this.getPrimeInterestRate()-0.02),getTerm());
        return this.getLoanAmt() + (this.getLoanAmt() * (this.getPrimeInterestRate()-0.02) * getTerm());

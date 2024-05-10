@@ -608,6 +608,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         ploan.setCustomerLastName(APPLICANTNAME_FIELD.getText()); //Name
         ploan.setLoanAmt(Double.parseDouble(LOANAMOUNT_FIELD.getText())); //Loan amount
         String selectedTerm = (String) TERM_SELECTION.getSelectedItem(); //Term
+        
     int term;
     switch (selectedTerm) {
     case "Short":
@@ -659,6 +660,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         }else if(choice2.equals("Business")){
             //ARRAYLIST
             //Loan # ,  Name,    Loan Amount , Term , loan type, amountowed
+            
             BusinessLoan bloan = new BusinessLoan();            //BUSINESS LOAN
         bloan.setLoanNumber(Integer.parseInt(LOANNUMBER_FIELD.getText()));
         bloan.setCustomerLastName(APPLICANTNAME_FIELD.getText());
@@ -744,6 +746,92 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
 
     private void LOAN_LIST_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOAN_LIST_BUTTONActionPerformed
         // TODO add your handling code here:
+               DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+    model.setRowCount(0); // Clear existing rows from the table
+      
+   
+    
+    
+    for (Loan loan : loans) {
+        if (loan instanceof BusinessLoan) {
+            BusinessLoan businessLoan = (BusinessLoan) loan;
+            businessLoan.setPrimeInterestRate(PROPERTIES);
+               BigDecimal amountOwed = BigDecimal.valueOf(businessLoan.calculateOwed());
+                 String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+          
+            
+            String[] rowData = {
+                String.valueOf(businessLoan.getLoanNumber()),
+                businessLoan.getCustomerLastName(),
+                String.valueOf(businessLoan.getLoanAmt()),
+                String.valueOf(businessLoan.getTerm()),
+                "Business", // Loan Type
+                formattedAmountOwed
+            };
+            model.addRow(rowData);
+           
+            
+        }
+        
+    }
+    //------------------------
+           DefaultTableModel model2 = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+    model.setRowCount(0); // Clear existing rows from the table
+     
+     
+     
+    for (Loan loan : loans) {
+        if (loan instanceof PersonalLoan) {
+            PersonalLoan personalloan = (PersonalLoan) loan;
+            personalloan.setPrimeInterestRate(PROPERTIES);
+               BigDecimal amountOwed = BigDecimal.valueOf(personalloan.calculateOwed());
+              String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();         
+            String[] rowData = {
+                String.valueOf(personalloan.getLoanNumber()),
+                personalloan.getCustomerLastName(),
+                String.valueOf(personalloan.getLoanAmt()),
+                String.valueOf(personalloan.getTerm()),
+                "Personal", // Loan Type
+               formattedAmountOwed
+                //String.valueOf(personalloan.calculateOwed())
+            };
+            model.addRow(rowData);
+             
+        }
+        
+    }    
+    //------------------------
+     DefaultTableModel model3 = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+            model.setRowCount(0);
+    
+            for (Loan loan : loans) {
+                   BigDecimal amountOwed = BigDecimal.valueOf(loan.calculateOwed());
+                 String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+    
+                String[] rowData = {
+                    String.valueOf(loan.getLoanNumber()),
+                    loan.getCustomerLastName(),
+                    String.valueOf(loan.getLoanAmt()),
+                    String.valueOf(loan.getTerm()),
+                    loan instanceof PersonalLoan ? "Personal" : "Business", // Determine loan type
+                    //-----------
+                    
+                    //------------------
+                    formattedAmountOwed
+                };
+                model.addRow(rowData); // Add the row to the table
+
+     
+     
+  
+        
+    }
+    //------------------------
+    
+    
+    
+         // displayAllLoans();
+         // displayAllLoans();
         PANE.setSelectedComponent(DISPLAYLOAN_PANE);
     }//GEN-LAST:event_LOAN_LIST_BUTTONActionPerformed
 
@@ -865,6 +953,11 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         private boolean primeRateEntered = false;
     private void primeInterestRateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeInterestRateButtonActionPerformed
         // TODO add your handling code here:
+        
+        
+                 
+            
+            
          if (primeRateEntered) {
         // If already entered, show a message indicating that it cannot be clicked again
         JOptionPane.showMessageDialog(this, "Prime interest rate already entered.");
@@ -935,10 +1028,49 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         if (foundLoan != null) {
             DefaultTableModel model = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
             model.setRowCount(0); // Clear existing rows from the table
-
+                String formattedAmountOwed = "";
+            
             // Populate the table with the details of the found loan
-            BigDecimal amountOwed = BigDecimal.valueOf(foundLoan.calculateOwed());
-            String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+            if (foundLoan instanceof PersonalLoan){
+                PersonalLoan personalLoan = (PersonalLoan) foundLoan;
+                  BigDecimal amountOwed = BigDecimal.valueOf(foundLoan.calculateOwed());           
+                  formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+                  //-----------------------
+                   String[] rowData = {
+                String.valueOf(personalLoan.getLoanNumber()),
+                personalLoan.getCustomerLastName(),
+                String.valueOf(personalLoan.getLoanAmt()),
+                String.valueOf(personalLoan.getTerm()),
+                foundLoan instanceof PersonalLoan ? "Personal" : "Business", // Determine loan type
+                formattedAmountOwed
+            };
+            model.addRow(rowData);
+            
+            //-----------------------------
+                  
+            }else{
+                BusinessLoan businessLoan = (BusinessLoan) foundLoan;
+                BigDecimal amountOwed = BigDecimal.valueOf(foundLoan.calculateOwed());           
+                   formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();
+                   
+                     String[] rowData = {
+                String.valueOf(businessLoan.getLoanNumber()),
+                businessLoan.getCustomerLastName(),
+                String.valueOf(businessLoan.getLoanAmt()),
+                String.valueOf(businessLoan.getTerm()),
+                foundLoan instanceof PersonalLoan ? "Personal" : "Business", // Determine loan type
+                formattedAmountOwed
+            };
+            model.addRow(rowData);
+            }
+            
+            
+           /* BigDecimal amountOwed = BigDecimal.valueOf(foundLoan.calculateOwed());           
+            String formattedAmountOwed = amountOwed.setScale(2, RoundingMode.HALF_UP).toString();*/
+           
+           /*
+             System.out.println("formattedAmountOwed of search loan number button: " + formattedAmountOwed);
+             BigDecimal amountOwed = BigDecimal.valueOf(foundLoan.calculateOwed());        
             String[] rowData = {
                 String.valueOf(foundLoan.getLoanNumber()),
                 foundLoan.getCustomerLastName(),
@@ -948,6 +1080,7 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                 formattedAmountOwed
             };
             model.addRow(rowData);
+           */
         } else {
             // If no loan with the specified loan number is found, display a message
             JOptionPane.showMessageDialog(rootPane, "No loan found with the specified loan number.");
@@ -977,6 +1110,9 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
                     String.valueOf(loan.getLoanAmt()),
                     String.valueOf(loan.getTerm()),
                     loan instanceof PersonalLoan ? "Personal" : "Business", // Determine loan type
+                    //-----------
+                    
+                    //------------------
                     formattedAmountOwed
                 };
                 model.addRow(rowData); // Add the row to the table
@@ -1019,8 +1155,9 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoansApplication().setVisible(true);
+                new LoansApplication().setVisible(true);               
             }
+            
         });
     }
 
