@@ -970,7 +970,12 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     // Validate the input and store the prime interest rate
     if (primeRateStr != null && !primeRateStr.isEmpty()) {
         try {
+            
             double primeRate = Double.parseDouble(primeRateStr);
+            if(primeRate == 0){
+                JOptionPane.showMessageDialog(rootPane, "Interest rate cannot be 0");
+                primeRate = Double.parseDouble("k");              
+            }
             // Store the prime interest rate and set the flag to true
             PersonalLoan personalLoan = new PersonalLoan();
             personalLoan.setInterestRate(primeRate);
