@@ -533,12 +533,12 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     return false;
   }
     private void SUBMIT_APPLICATION_BUTTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SUBMIT_APPLICATION_BUTTONActionPerformed
- 
+
        String choice = (String) TERM_SELECTION.getSelectedItem();
        String choice2 = (String) LOANTYPE_SELECTION.getSelectedItem();
        String applicantvar = LOANNUMBER_FIELD.getText();
-         String loanNumberText = LOANNUMBER_FIELD.getText();
-            String loanAmountText = LOANAMOUNT_FIELD.getText();
+       String loanNumberText = LOANNUMBER_FIELD.getText();
+       String loanAmountText = LOANAMOUNT_FIELD.getText();
        //-----------------
        if (!loanNumberText.matches("\\d+")) {
         JOptionPane.showMessageDialog(rootPane, "Invalid loan number. Please enter a valid integer.");
@@ -557,6 +557,11 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         int loanAmt = Integer.parseInt(LOANAMOUNT_FIELD.getText());
         String applicantName = APPLICANTNAME_FIELD.getText();
         
+        //Check for special characters CUZ NO 
+        if (!applicantName.matches("[a-zA-Z]+")) {
+            JOptionPane.showMessageDialog(rootPane, "Applicant name must contain only letters.");
+            return;
+        }
         // Validate if the loan number and loan amount are positive
         if (loanNum <= 0 || loanAmt <= 0 || applicantName.isEmpty() || choice.equals("None") || choice2.equals("None")) {
             JOptionPane.showMessageDialog(rootPane, "All fields must be filled with the correct information.");
