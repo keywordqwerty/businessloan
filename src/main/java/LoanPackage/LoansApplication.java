@@ -203,6 +203,11 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
         jLabel5.setText("Loan Type:");
 
         LOANTYPE_SELECTION.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Business", "Personal" }));
+        LOANTYPE_SELECTION.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LOANTYPE_SELECTIONActionPerformed(evt);
+            }
+        });
 
         SUBMIT_APPLICATION_BUTTON.setText("Submit Application");
         SUBMIT_APPLICATION_BUTTON.addActionListener(new java.awt.event.ActionListener() {
@@ -1008,14 +1013,23 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
             LOANNUMBER_FIELD.setText("");
             APPLICANTNAME_FIELD.setText("");
             LOANAMOUNT_FIELD.setText("");
+            TERM_SELECTION.setSelectedIndex(0);
+            LOANTYPE_SELECTION.setSelectedIndex(0);
+            
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void loansearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loansearchActionPerformed
+     DefaultTableModel model4 = (DefaultTableModel) DISPLAY_LOAN_TABLE.getModel();
+    if (model4.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(rootPane, "No data available to display in the table.");
+        return; // Exit the method if the table is empty
+    }
+        
         // Get the loan number entered in the LOAN_NUMBER_FIELD1 text field
     String loanNumberText = LOAN_NUMBER_FIELD1.getText();
-
+        
     // Check if the input contains only digits
     if (!loanNumberText.matches("\\d+")) {
         JOptionPane.showMessageDialog(rootPane, "Invalid input. Loan number must be a positive integer.");
@@ -1100,6 +1114,10 @@ public class LoansApplication extends javax.swing.JFrame implements LoanConstant
     }
                 // TODO add your handling code here:
     }//GEN-LAST:event_loansearchActionPerformed
+
+    private void LOANTYPE_SELECTIONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LOANTYPE_SELECTIONActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LOANTYPE_SELECTIONActionPerformed
     private void displayAllLoans() {
     jButton1.addActionListener(new ActionListener() {
         
